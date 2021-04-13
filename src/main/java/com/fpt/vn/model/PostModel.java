@@ -10,20 +10,16 @@ public class PostModel {
     private Long id;
     private Date createAt;
     private int status;
-    private String notification;
     private String content;
-    private Long postIdShear;
-    private AppUser user;
+    private Long userId;
     private String imgs;
 
-    public PostModel(Long id, Date createAt, int status, String notification, String content, Long postIdShear, AppUser user, String imgs) {
+    public PostModel(Long id, Date createAt, int status, String content, Long userid, String imgs) {
         this.id = id;
         this.createAt = createAt;
         this.status = status;
-        this.notification = notification;
         this.content = content;
-        this.postIdShear = postIdShear;
-        this.user = user;
+        this.userId = userid;
         this.imgs = imgs;
     }
 
@@ -51,14 +47,6 @@ public class PostModel {
         this.status = status;
     }
 
-    public String getNotification() {
-        return notification;
-    }
-
-    public void setNotification(String notification) {
-        this.notification = notification;
-    }
-
     public String getContent() {
         return content;
     }
@@ -67,20 +55,12 @@ public class PostModel {
         this.content = content;
     }
 
-    public Long getPostIdShear() {
-        return postIdShear;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setPostIdShear(Long postIdShear) {
-        this.postIdShear = postIdShear;
-    }
-
-    public AppUser getUser() {
-        return user;
-    }
-
-    public void setUser(AppUser user) {
-        this.user = user;
+    public void setUserId(Long userid) {
+        this.userId = userid;
     }
 
     public String getImgs() {

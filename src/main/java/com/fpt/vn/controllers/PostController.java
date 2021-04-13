@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
-@RequestMapping("/api")
+@RequestMapping("/post")
 public class PostController {
     @Autowired
     private UserService userService;
@@ -40,10 +40,10 @@ public class PostController {
 //    private PostLikeService postLikeService;
 //    String UPLOADED_FOLDER = "/D:/BESocialMedia/src/main/resources/img/";
 
-    @PostMapping("/addPost/{idUser}")
-    public ResponseEntity addPost(@RequestBody PostModel postModel, @PathVariable Long idUser) {
-        AppUser user = (userService.findById(idUser)).isPresent() ?
-                userService.findById(idUser).get() : null;
+    @PostMapping("/create")
+    public ResponseEntity addPost(@RequestBody PostModel postModel) {
+        AppUser user = (userService.findById(postModel.getUserId())).isPresent() ?
+                userService.findById(postModel.getUserId()).get() : null;
         PostEntity postEntity = new PostEntity();
         Date date = new Date(Calendar.getInstance().getTime().getTime());
 
@@ -52,19 +52,13 @@ public class PostController {
         postEntity.setStatus(postModel.getStatus());
         postEntity.setContent(postModel.getContent());
 
-        if (postModel.getPostIdShear() != null) {
-            postEntity.setPostIdShear(postModel.getPostIdShear());
-        }
 
         if (postModel.getImgs() != "") {
             ImgEntity imgEntity = new ImgEntity();
             imgEntity.setLinkImg(postModel.getImgs());
-            List<ImgEntity> listImg = new ArrayList<>();
-            listImg.add(imgEntity);
-            postEntity.setImgs(listImg);
-
             imgEntity.setUser(user);
             postService.savePost(postEntity);
+
             List<PostEntity> listPost = (List<PostEntity>) postService.findAll();
             imgEntity.setPostId(listPost.get(listPost.size() - 1).getId());
             iImgService.save(imgEntity);
@@ -75,7 +69,7 @@ public class PostController {
         }
     }
 
-    @PostMapping("/editPost/{idUser}")
+    @PostMapping("/edit/{idUser}")
     public ResponseEntity editPost(@RequestBody PostModel postModel, @PathVariable Long idUser) {
         AppUser user = (userService.findById(idUser)).isPresent() ?
                 userService.findById(idUser).get() : null;
@@ -86,9 +80,9 @@ public class PostController {
 
         ImgEntity imgEntity = new ImgEntity();
         imgEntity.setLinkImg(postModel.getImgs());
-        List<ImgEntity> listImg = new ArrayList<>();
-        listImg.add(imgEntity);
-        postEntity.setImgs(listImg);
+//        List<ImgEntity> listImg = new ArrayList<>();
+//        listImg.add(imgEntity);
+//        postEntity.setImgs(listImg);
 
         imgEntity.setUser(user);
         postService.savePost(postEntity);
@@ -98,7 +92,7 @@ public class PostController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @PostMapping("/editPostAndImg/{idImg}")
+    @PostMapping("/editAndImg/{idImg}")
     public ResponseEntity editPostAndImg(@RequestBody PostModel postModel, @PathVariable Long idImg) {
         PostEntity postEntity = postService.findById(postModel.getId()).get();
         postEntity.setStatus(postModel.getStatus());

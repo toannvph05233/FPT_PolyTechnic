@@ -1,8 +1,6 @@
 package com.fpt.vn.controllers;
 
-import com.fpt.vn.model.AppUser;
-import com.fpt.vn.model.JwtResponse;
-import com.fpt.vn.model.UserPrinciple;
+import com.fpt.vn.model.*;
 import com.fpt.vn.service.RoleService;
 import com.fpt.vn.service.UserService;
 import com.fpt.vn.service.VerificationTokenService;
@@ -30,14 +28,14 @@ import java.util.Set;
 @RestController
 @CrossOrigin("*")
 public class UserController {
-//    @Autowired
-//    private Environment env;
+    @Autowired
+    private Environment env;
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    private VerificationTokenService verificationTokenService;
+    @Autowired
+    private VerificationTokenService verificationTokenService;
 
     @Autowired
     private JwtService jwtService;
@@ -45,11 +43,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-//    @Autowired
-//    private RoleService roleService;
-//
-//    @Autowired
-//    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
 
@@ -64,7 +62,40 @@ public class UserController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         AppUser currentUser = userService.findByUsername(user.getUsername());
-        return ResponseEntity.ok(new JwtResponse(jwt, currentUser.getId(), userDetails.getUsername(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(currentUser.getId(),jwt, userDetails.getUsername(), currentUser.getImageUrls(), userDetails.getAuthorities()));
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<AppUser> create(@RequestBody AppUser user, BindingResult bindingResult) {
+        if (bindingResult.hasFieldErrors()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        Iterable<AppUser> users = userService.findAll();
+        for (AppUser currentUser : users) {
+            if (currentUser.getUsername().equals(user.getUsername())) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+//        if (!userService.isCorrectConfirmPassword(user)) {
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+        if (user.getRoles() != null) {
+            Role role = roleService.findByName("ROLE_ADMIN");
+            Set<Role> roles = new HashSet<>();
+            roles.add(role);
+            user.setRoles(roles);
+        } else {
+            Role role1 = roleService.findByName("ROLE_USER");
+            Set<Role> roles1 = new HashSet<>();
+            roles1.add(role1);
+            user.setRoles(roles1);
+        }
+        user.setImageUrls("https://firebasestorage.googleapis.com/v0/b/spa-stay.appspot.com/o/img%2F1583085901039?alt=media&token=e396af18-3aa6-49ae-8ffc-22a55124b18a");
+        userService.save(user);
+        VerificationToken token = new VerificationToken(user);
+        token.setExpiryDate(10);
+        verificationTokenService.save(token);
+        return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
 
 }

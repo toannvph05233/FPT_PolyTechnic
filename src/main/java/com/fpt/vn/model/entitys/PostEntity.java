@@ -5,8 +5,6 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -22,41 +20,52 @@ public class PostEntity {
     @Column(nullable = false)
     private int status;
 
-
     private String content;
-
-    private Long postIdShear;
 
     @ManyToOne
     @JoinColumn(name = "userId")
     private AppUser user;
 
-    private Long likes;
-    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
-    private List<ImgEntity> imgs = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "postTypeId")
+    private PostTypeEntity postType;
 
-    @OneToMany(targetEntity = CommentForm.class)
-    private List<CommentForm> listComment;
+
+    private Long likes;
+
+//    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
+//    private List<ImgEntity> imgs = new ArrayList<>();
+//
+//    @OneToMany(targetEntity = CommentForm.class)
+//    private List<CommentForm> listComment;
 
     public PostEntity() {
     }
 
-    public PostEntity(Long id, Date createAt, int status,String content, Long postIdShear, AppUser user, List<ImgEntity> imgs) {
+    public PostEntity(Long id, Date createAt, int status, String content, AppUser user, PostTypeEntity postType, Long likes) {
         this.id = id;
         this.createAt = createAt;
         this.status = status;
         this.content = content;
-        this.postIdShear = postIdShear;
         this.user = user;
-        this.imgs = imgs;
+        this.postType = postType;
+        this.likes = likes;
     }
 
-    public List<ImgEntity> getImgs() {
-        return imgs;
+    public PostTypeEntity getPostType() {
+        return postType;
     }
 
-    public void setImgs(List<ImgEntity> imgs) {
-        this.imgs = imgs;
+    public void setPostType(PostTypeEntity postType) {
+        this.postType = postType;
+    }
+
+    public Long getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Long likes) {
+        this.likes = likes;
     }
 
     public String getContent() {
@@ -65,14 +74,6 @@ public class PostEntity {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public Long getPostIdShear() {
-        return postIdShear;
-    }
-
-    public void setPostIdShear(Long postIdShear) {
-        this.postIdShear = postIdShear;
     }
 
     public Long getId() {
