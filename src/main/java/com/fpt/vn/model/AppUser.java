@@ -1,6 +1,8 @@
 package com.fpt.vn.model;
 
 
+import com.fpt.vn.model.entitys.LocationEntity;
+
 import javax.persistence.*;
 
 import java.io.Serializable;
@@ -26,6 +28,10 @@ public class AppUser implements Serializable {
 //    @Column(nullable = false)
 //    private String confirmPassword;
 
+    @ManyToOne
+    @JoinColumn(name = "locationId")
+    private LocationEntity locationEntity;
+
     private String firstName;
     private String lastName;
 
@@ -49,10 +55,19 @@ public class AppUser implements Serializable {
     public AppUser() {
     }
 
-    public AppUser(Long id, String username, String password, String firstName, String lastName, String email, String phoneNumber, String gender, String imageUrls, boolean enabled, Set<Role> roles) {
+    public LocationEntity getLocationEntity() {
+        return locationEntity;
+    }
+
+    public void setLocationEntity(LocationEntity locationEntity) {
+        this.locationEntity = locationEntity;
+    }
+
+    public AppUser(Long id, String username, String password, LocationEntity locationEntity, String firstName, String lastName, String email, String phoneNumber, String gender, String imageUrls, boolean enabled, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
+        this.locationEntity = locationEntity;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;

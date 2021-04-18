@@ -5,6 +5,8 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "post")
@@ -33,8 +35,8 @@ public class PostEntity {
 
     private Long likes;
 
-//    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
-//    private List<ImgEntity> imgs = new ArrayList<>();
+    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER)
+    private List<ImgEntity> imgs = new ArrayList<>();
 //
 //    @OneToMany(targetEntity = CommentForm.class)
 //    private List<CommentForm> listComment;
@@ -42,7 +44,7 @@ public class PostEntity {
     public PostEntity() {
     }
 
-    public PostEntity(Long id, Date createAt, int status, String content, AppUser user, PostTypeEntity postType, Long likes) {
+    public PostEntity(Long id, Date createAt, int status, String content, AppUser user, PostTypeEntity postType, Long likes, List<ImgEntity> imgs) {
         this.id = id;
         this.createAt = createAt;
         this.status = status;
@@ -50,6 +52,15 @@ public class PostEntity {
         this.user = user;
         this.postType = postType;
         this.likes = likes;
+        this.imgs = imgs;
+    }
+
+    public List<ImgEntity> getImgs() {
+        return imgs;
+    }
+
+    public void setImgs(List<ImgEntity> imgs) {
+        this.imgs = imgs;
     }
 
     public PostTypeEntity getPostType() {

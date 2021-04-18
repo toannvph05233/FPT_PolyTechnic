@@ -4,20 +4,24 @@ import com.fpt.vn.model.AppUser;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Date;
 
 @Entity
+@Table(name = "messenger")
 @Data
-public class CommentForm {
+public class MessengerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String comment;
-
-    private Date createAt;
+    @Column(nullable = false)
+    private String messenger;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private AppUser user;
+    private AppUser appUser;
+
+    @ManyToOne
+    @JoinColumn(name = "romchat_id")
+    private RomChatEntity romChatEntity;
 }
+

@@ -11,16 +11,24 @@ public class PostModel {
     private Date createAt;
     private int status;
     private String content;
-    private Long userId;
+    private AppUser user;
     private String imgs;
 
-    public PostModel(Long id, Date createAt, int status, String content, Long userid, String imgs) {
+    public PostModel(Long id, Date createAt, int status, String content, AppUser user, String imgs) {
         this.id = id;
         this.createAt = createAt;
         this.status = status;
         this.content = content;
-        this.userId = userid;
+        this.user = user;
         this.imgs = imgs;
+    }
+
+    public AppUser getUser() {
+        return user;
+    }
+
+    public void setUser(AppUser user) {
+        this.user = user;
     }
 
     public Long getId() {
@@ -55,13 +63,6 @@ public class PostModel {
         this.content = content;
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userid) {
-        this.userId = userid;
-    }
 
     public String getImgs() {
         return imgs;

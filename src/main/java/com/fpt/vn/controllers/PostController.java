@@ -12,14 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @CrossOrigin("*")
@@ -42,8 +39,8 @@ public class PostController {
 
     @PostMapping("/create")
     public ResponseEntity addPost(@RequestBody PostModel postModel) {
-        AppUser user = (userService.findById(postModel.getUserId())).isPresent() ?
-                userService.findById(postModel.getUserId()).get() : null;
+        AppUser user = (userService.findById(postModel.getUser().getId())).isPresent() ?
+                userService.findById(postModel.getUser().getId()).get() : null;
         PostEntity postEntity = new PostEntity();
         Date date = new Date(Calendar.getInstance().getTime().getTime());
 

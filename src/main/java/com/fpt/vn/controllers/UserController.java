@@ -1,6 +1,7 @@
 package com.fpt.vn.controllers;
 
 import com.fpt.vn.model.*;
+import com.fpt.vn.model.entitys.LocationEntity;
 import com.fpt.vn.service.RoleService;
 import com.fpt.vn.service.UserService;
 import com.fpt.vn.service.VerificationTokenService;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -49,8 +51,12 @@ public class UserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-
+    @GetMapping("/usersByLocation/{userId}")
+    public ResponseEntity usersByLocation(@PathVariable Long userId) {
+        AppUser appUser = userService.findById(userId).get();
+        List<AppUser> appUserList = userService.findAllByLocation(appUser.getLocationEntity().getId());
+        return new ResponseEntity(appUserList, HttpStatus.OK);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserPrinciple user) {
@@ -62,7 +68,7 @@ public class UserController {
         String jwt = jwtService.generateTokenLogin(authentication);
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
         AppUser currentUser = userService.findByUsername(user.getUsername());
-        return ResponseEntity.ok(new JwtResponse(currentUser.getId(),jwt, userDetails.getUsername(), currentUser.getImageUrls(), userDetails.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(currentUser.getId(),jwt,userDetails.getUsername(), currentUser.getImageUrls(),currentUser.getLocationEntity().getId(), userDetails.getAuthorities()));
     }
 
     @PostMapping("/register")
@@ -76,9 +82,6 @@ public class UserController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
         }
-//        if (!userService.isCorrectConfirmPassword(user)) {
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
         if (user.getRoles() != null) {
             Role role = roleService.findByName("ROLE_ADMIN");
             Set<Role> roles = new HashSet<>();
