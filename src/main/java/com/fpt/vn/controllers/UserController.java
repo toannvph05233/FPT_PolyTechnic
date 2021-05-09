@@ -57,6 +57,11 @@ public class UserController {
         List<AppUser> appUserList = userService.findAllByLocation(appUser.getLocationEntity().getId());
         return new ResponseEntity(appUserList, HttpStatus.OK);
     }
+    @GetMapping("/userDoctor")
+    public ResponseEntity allUsersByRole() {
+        Iterable<AppUser> users = userService.findAllDoctor();
+        return new ResponseEntity(users, HttpStatus.OK);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserPrinciple user) {

@@ -108,6 +108,11 @@ public class PostController {
         Iterable<PostEntity> listPost = postService.findAllByStatus(1);
         return new ResponseEntity<>(listPost, HttpStatus.OK);
     }
+    @GetMapping("/allPostNotApply/{idUser}")
+    public ResponseEntity<List<PostEntity>> getAllPostNotApply(@PathVariable Long idUser) {
+        List<PostEntity> listPost = postService.findPostNotApply(idUser);
+        return new ResponseEntity<>(listPost, HttpStatus.OK);
+    }
 
     @GetMapping("/allPostByUserId/{idUser}")
     public ResponseEntity<Iterable<PostEntity>> getAllByUserId(@PathVariable Long idUser) {

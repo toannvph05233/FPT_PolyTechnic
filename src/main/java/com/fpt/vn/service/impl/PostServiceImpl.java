@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -42,6 +43,11 @@ public class PostServiceImpl implements PostService {
     @Override
     public void editPost(PostEntity postEntity) {
         iPostRepository.save(postEntity);
+    }
+
+    @Override
+    public List<PostEntity> findPostNotApply(Long id) {
+        return iPostRepository.findPostNotApply(id);
     }
 
     @Override

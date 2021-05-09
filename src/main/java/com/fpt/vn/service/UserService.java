@@ -15,9 +15,13 @@ public interface UserService extends UserDetailsService {
 
     AppUser findByUsername(String username);
 
+    Iterable<AppUser> findAllDoctor();
+
     AppUser getCurrentUser();
 
     Optional<AppUser> findById(Long id);
+
+//    long coutFeedback(Long id);
 
     UserDetails loadUserById(Long id);
 

@@ -7,20 +7,23 @@ import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
-@Table(name = "recruitment")
+@Table(name = "apply")
 @Data
-public class RecruitmentEntity {
+public class ApplyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "postId")
     private PostEntity postEntity;
 
-    @OneToOne
-    @JoinColumn(name = "applyId")
-    private ApplyEntity applyEntity;
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private AppUser appUser;
+
+    @Column(nullable = false)
+    private int status;
 
     @Column(nullable = false)
     private Date date;

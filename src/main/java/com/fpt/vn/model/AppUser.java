@@ -39,6 +39,8 @@ public class AppUser implements Serializable {
     private String email;
 
     private String phoneNumber;
+    private String introduce;
+    private double price;
     private String gender;
 
     @Column(columnDefinition = "TEXT")
@@ -63,7 +65,7 @@ public class AppUser implements Serializable {
         this.locationEntity = locationEntity;
     }
 
-    public AppUser(Long id, String username, String password, LocationEntity locationEntity, String firstName, String lastName, String email, String phoneNumber, String gender, String imageUrls, boolean enabled, Set<Role> roles) {
+    public AppUser(Long id, String username, String password, LocationEntity locationEntity, String firstName, String lastName, String email, String phoneNumber, String introduce, double price, String gender, String imageUrls, boolean enabled, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -72,10 +74,28 @@ public class AppUser implements Serializable {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.introduce = introduce;
+        this.price = price;
         this.gender = gender;
         this.imageUrls = imageUrls;
         this.enabled = enabled;
         this.roles = roles;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     public Long getId() {

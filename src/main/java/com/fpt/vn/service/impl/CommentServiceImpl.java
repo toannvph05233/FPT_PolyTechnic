@@ -1,7 +1,7 @@
 package com.fpt.vn.service.impl;
 
 
-import com.fpt.vn.model.entitys.CommentForm;
+import com.fpt.vn.model.entitys.CommentPost;
 import com.fpt.vn.repository.CommentRepository;
 import com.fpt.vn.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,17 +16,17 @@ public class CommentServiceImpl implements CommentService {
 
 
     @Override
-    public Iterable<CommentForm> findAll() {
+    public Iterable<CommentPost> findAll() {
         return commentRepository.findAll();
     }
 
     @Override
-    public Optional<CommentForm> findById(Long id) {
+    public Optional<CommentPost> findById(Long id) {
         return commentRepository.findById(id);
     }
 
     @Override
-    public void save(CommentForm commentForm) {
+    public void save(CommentPost commentForm) {
         commentRepository.save(commentForm);
     }
 

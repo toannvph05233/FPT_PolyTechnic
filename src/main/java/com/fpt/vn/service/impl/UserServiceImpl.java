@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Iterable<AppUser> findAllDoctor() {
+        return userRepository.findAllDoctor();
+    }
+
+    @Override
     public AppUser getCurrentUser() {
         AppUser user;
         String userName;
@@ -73,6 +78,11 @@ public class UserServiceImpl implements UserService {
     public Optional<AppUser> findById(Long id) {
         return userRepository.findById(id);
     }
+
+//    @Override
+//    public long coutFeedback(Long id) {
+//        return userRepository.coutFeedback(id);
+//    }
 
     @Override
     public UserDetails loadUserById(Long id) {

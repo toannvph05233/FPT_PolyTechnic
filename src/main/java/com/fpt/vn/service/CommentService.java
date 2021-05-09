@@ -1,16 +1,17 @@
 package com.fpt.vn.service;
 
 
-import com.fpt.vn.model.entitys.CommentForm;
+
+import com.fpt.vn.model.entitys.CommentPost;
 
 import java.util.Optional;
 
 public interface CommentService {
-    Iterable<CommentForm> findAll();
+    Iterable<CommentPost> findAll();
 
-    Optional<CommentForm> findById(Long id);
+    Optional<CommentPost> findById(Long id);
 
-    void save(CommentForm commentForm);
+    void save(CommentPost commentPost);
 
     void delete(Long id);
 }
