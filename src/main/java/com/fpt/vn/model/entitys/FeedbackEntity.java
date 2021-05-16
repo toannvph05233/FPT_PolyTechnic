@@ -4,6 +4,7 @@ import com.fpt.vn.model.AppUser;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Data
@@ -15,6 +16,7 @@ public class FeedbackEntity {
     private Long idDoctor;
     private int counts;
     private String content;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

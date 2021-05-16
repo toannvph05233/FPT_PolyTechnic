@@ -6,6 +6,7 @@ import com.fpt.vn.service.FeedbackService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 @Service
 public class FeedbackServiceImpl implements FeedbackService {
@@ -14,6 +15,16 @@ public class FeedbackServiceImpl implements FeedbackService {
     @Override
     public Iterable<FeedbackEntity> findAll() {
         return feedbackRepo.findAll();
+    }
+
+    @Override
+    public Long sumByIdDoctor(Long id) {
+        return feedbackRepo.sumByIdDoctor(id).getSum();
+    }
+
+    @Override
+    public List<FeedbackEntity> findAllByIdDoctor(Long id) {
+        return feedbackRepo.findAllByIdDoctor(id);
     }
 
     @Override

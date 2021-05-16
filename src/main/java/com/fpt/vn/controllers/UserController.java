@@ -62,6 +62,12 @@ public class UserController {
         Iterable<AppUser> users = userService.findAllDoctor();
         return new ResponseEntity(users, HttpStatus.OK);
     }
+    @GetMapping("/findUser/{id}")
+    public ResponseEntity findUser(@PathVariable Long id) {
+        AppUser user = userService.findById(id).get();
+        return new ResponseEntity(user, HttpStatus.OK);
+    }
+
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserPrinciple user) {

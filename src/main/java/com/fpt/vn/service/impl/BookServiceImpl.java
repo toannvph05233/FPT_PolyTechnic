@@ -6,6 +6,8 @@ import com.fpt.vn.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,5 +33,30 @@ public class BookServiceImpl implements IBookService {
     @Override
     public void delete(Long id) {
         bookRepo.deleteById(id);
+    }
+
+    @Override
+    public List<BookEntity> findAllByIdDoctor(Long id) {
+        return bookRepo.findAllByIdDoctor(id);
+    }
+
+    @Override
+    public BookEntity findByUserId(Long id) {
+        return bookRepo.findByUserId(id);
+    }
+
+    @Override
+    public List<BookEntity> findAllByIdDoctorAndDateAfter(Long id) {
+        long millis=System.currentTimeMillis();
+        java.sql.Date date =new java.sql.Date(millis);
+        return bookRepo.findAllByIdDoctorAndDateAfter(id,date);
+    }
+
+    @Override
+    public List<BookEntity> findAllByUserIdAndDateAfterAndStatusTrue(Long id) {
+        long millis=System.currentTimeMillis();
+        java.sql.Date date =new java.sql.Date(millis);
+        date.setDate(date.getDate()-1);
+        return bookRepo.findAllByUserIdAndDateAfter(id,date);
     }
 }

@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<AppUser, Long> {
     AppUser findByUsername(String username);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM  user_table inner join user_role on user_table.id = user_role.user_id inner join fptpolytechnic.role on user_role.role_id = fptpolytechnic.role.id   where fptpolytechnic.role.name like '%USER'")
+    @Query(nativeQuery = true, value = "SELECT * FROM  user_table inner join user_role on user_table.id = user_role.user_id inner join fptpolytechnic.role on user_role.role_id = fptpolytechnic.role.id   where fptpolytechnic.role.name like '%DOCTOR'")
     List<AppUser> findAllDoctor();
 
 //    @Query("SELECT count(FeedbackEntity.id) FROM FeedbackEntity inner join AppUser on FeedbackEntity.user.id = FeedbackEntity.id where FeedbackEntity.idDoctor = :id")
