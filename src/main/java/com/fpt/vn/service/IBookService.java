@@ -15,11 +15,15 @@ public interface IBookService {
 
     void delete(Long id);
 
+    void acceptBooking(Long id);
+
     List<BookEntity> findAllByIdDoctor(Long id);
     BookEntity findByUserId(Long id);
 
     List<BookEntity> findAllByIdDoctorAndDateAfter(Long id);
-    List<BookEntity> findAllByUserIdAndDateAfterAndStatusTrue(Long id);
+    List<BookEntity> findAllByUserIdAndDoneFalse(Long id);
+    List<BookEntity> findAllByIdDoctorAndDateAfterAndStatusFalse(Long id);
+    List<BookEntity> findAllByIdDoctorAndDoneTrue(Long id);
 
 
 }

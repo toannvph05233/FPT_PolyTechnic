@@ -68,7 +68,7 @@ public class LocationController {
 
         double val = Math.pow(Math.sin(difflat / 2), 2) + Math.cos(lati1) * Math.cos(lati2) * Math.pow(Math.sin(difflong / 2), 2);
         double res2 = 6378.8 * (2 * Math.asin(Math.sqrt(val))); //for kilometers
-        if (res2 < 5) {
+        if (res2 < 10) {
             return true;
         } else {
             return false;

@@ -22,6 +22,12 @@ public class BookController {
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
+    @GetMapping("/allByDoctorStatusFalse/{id}")
+    public ResponseEntity allByDoctorStatusFalse(@PathVariable Long id) {
+        List<BookEntity> list = iBookService.findAllByIdDoctorAndDateAfterAndStatusFalse(id);
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
+
     @GetMapping("/allByDoctorByDate/{id}")
     public ResponseEntity allByDoctorIdDoctorByDate(@PathVariable Long id) {
         List<BookEntity> list = iBookService.findAllByIdDoctorAndDateAfter(id);
@@ -36,7 +42,7 @@ public class BookController {
 
     @GetMapping("/checkBook/{id}")
     public ResponseEntity checkBooking(@PathVariable Long id) {
-        List<BookEntity> list = iBookService.findAllByUserIdAndDateAfterAndStatusTrue(id);
+        List<BookEntity> list = iBookService.findAllByUserIdAndDoneFalse(id);
         return new ResponseEntity(list, HttpStatus.OK);
     }
 
@@ -50,5 +56,16 @@ public class BookController {
     public ResponseEntity deleteBook(@PathVariable Long id) {
         iBookService.delete(id);
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @GetMapping("/acceptBook/{id}")
+    public ResponseEntity acceptBook(@PathVariable Long id) {
+        iBookService.acceptBooking(id);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+    @GetMapping("/allDone/{id}")
+    public ResponseEntity findAllDone(@PathVariable Long id) {
+        List<BookEntity> list = iBookService.findAllByIdDoctorAndDoneTrue(id);
+        return new ResponseEntity(list,HttpStatus.OK);
     }
 }

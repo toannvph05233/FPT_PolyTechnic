@@ -5,6 +5,7 @@ import com.fpt.vn.repository.BookRepo;
 import com.fpt.vn.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Date;
 import java.util.List;
@@ -36,6 +37,12 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
+    @Transactional
+    public void acceptBooking(Long id) {
+        bookRepo.acceptBooking(id);
+    }
+
+    @Override
     public List<BookEntity> findAllByIdDoctor(Long id) {
         return bookRepo.findAllByIdDoctor(id);
     }
@@ -53,10 +60,23 @@ public class BookServiceImpl implements IBookService {
     }
 
     @Override
-    public List<BookEntity> findAllByUserIdAndDateAfterAndStatusTrue(Long id) {
+    public List<BookEntity> findAllByUserIdAndDoneFalse(Long id) {
         long millis=System.currentTimeMillis();
         java.sql.Date date =new java.sql.Date(millis);
         date.setDate(date.getDate()-1);
-        return bookRepo.findAllByUserIdAndDateAfter(id,date);
+        return bookRepo.findAllBookDoneFalse(id,date);
+    }
+
+    @Override
+    public List<BookEntity> findAllByIdDoctorAndDateAfterAndStatusFalse(Long id) {
+        long millis=System.currentTimeMillis();
+        java.sql.Date date =new java.sql.Date(millis);
+        date.setDate(date.getDate()-1);
+        return bookRepo.findAllByIdDoctorIsTrue(id,date);
+    }
+
+    @Override
+    public List<BookEntity> findAllByIdDoctorAndDoneTrue(Long id) {
+        return bookRepo.findAllByIdDoctorAndDoneTrue(id);
     }
 }
