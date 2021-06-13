@@ -24,7 +24,7 @@ public interface IPostRepository extends JpaRepository<PostEntity, Long> {
 
     Optional<PostEntity> findById(Long id);
 
-    @Query("SELECT p FROM PostEntity p where p.id not in (SELECT p FROM PostEntity p inner join ApplyEntity a on p.id = a.postEntity.id where a.appUser.id =:id and p.status = 1)")
+    @Query("SELECT p FROM PostEntity p where p.status = 1 and p.id not in (SELECT p FROM PostEntity p inner join ApplyEntity a on p.id = a.postEntity.id where a.appUser.id =:id and p.status = 1)")
     List<PostEntity> findPostNotApply(@Param("id") Long id);
 
     Iterable<PostEntity> findAllByUserId(Long id);

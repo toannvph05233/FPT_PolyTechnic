@@ -57,6 +57,11 @@ public class UserController {
         List<AppUser> appUserList = userService.findAllByLocation(appUser.getLocationEntity().getId());
         return new ResponseEntity(appUserList, HttpStatus.OK);
     }
+    @GetMapping("/allDoctorOrNannyByLocation/{idLocation}/{idRole}")
+    public ResponseEntity findAllDoctorAndNannyByLocation(@PathVariable Long idLocation,@PathVariable Long idRole) {
+        List<AppUser> appUserList = userService.findAllDoctorAndNannyByLocation(idLocation,idRole);
+        return new ResponseEntity(appUserList, HttpStatus.OK);
+    }
     @GetMapping("/userDoctor")
     public ResponseEntity allUsersByRole() {
         Iterable<AppUser> users = userService.findAllDoctor();

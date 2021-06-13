@@ -25,4 +25,7 @@ public interface UserRepository extends JpaRepository<AppUser, Long> {
 
 
     List<AppUser> findAllByLocationEntityId(long id);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM user_table inner join user_role on user_table.id = user_role.user_id inner join role on role.id = user_role.role_id where location_id =:idLocation and role_id =:idRole")
+    List<AppUser> findAllDoctorAndNannyByLocation(@Param("idLocation") long idLocation,@Param("idRole") long idRole);
 }

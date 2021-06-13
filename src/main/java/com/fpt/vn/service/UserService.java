@@ -2,6 +2,7 @@ package com.fpt.vn.service;
 
 
 import com.fpt.vn.model.AppUser;
+import org.springframework.data.repository.query.Param;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -34,4 +35,7 @@ public interface UserService extends UserDetailsService {
     boolean isCorrectConfirmPassword(AppUser user);
 
     void delete(AppUser user);
+
+    List<AppUser> findAllDoctorAndNannyByLocation(long idLocation,long idRole);
+
 }

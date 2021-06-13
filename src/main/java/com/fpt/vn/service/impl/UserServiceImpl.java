@@ -138,4 +138,11 @@ public class UserServiceImpl implements UserService {
     public void delete(AppUser user) {
         userRepository.delete(user);
     }
+
+    @Override
+    public List<AppUser> findAllDoctorAndNannyByLocation(long idLocation, long idRole) {
+        return userRepository.findAllDoctorAndNannyByLocation(idLocation,idRole);
+    }
+
+
 }
